@@ -1,0 +1,9 @@
+{
+  "name": "wedding-welcome-sign",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {"node": ">=20"},
+  "scripts": {
+    "build": "mkdir -p dist && cp index.html app.js styles.css dist/"
+  }
+}
