@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "metrics": {
+    "production_loc": 2313,
+    "production_files": 40,
+    "production_packages": 9,
+    "test_files": 9,
+    "production_functions": 186,
+    "decision_points": 320
+  },
+  "persistence": {
+    "module": "go.etcd.io/bbolt",
+    "entities": [
+      "Record",
+      "Batch",
+      "Audit",
+      "Profile"
+    ],
+    "reopen_test": "TestPersistenceSurvivesReopen"
+  },
+  "workflows": [
+    {
+      "steps": [
+        "accept incoming couple and ceremony details",
+        "validate required display content and defaults",
+        "persist the record and audit entry",
+        "confirm the record is ready for presentation"
+      ],
+      "test": "TestWorkflowAccept"
+    },
+    {
+      "steps": [
+        "queue the confirmed record into the daily batch",
+        "dispatch the batch to the next operator",
+        "review audit and presentation data",
+        "publish without mutating the source record status"
+      ],
+      "test": "TestWorkflowPublish"
+    },
+    {
+      "steps": [
+        "open embedded storage",
+        "update profile and record state",
+        "close the storage handle",
+        "reopen and verify records remain available"
+      ],
+      "test": "TestWorkflowReopen"
+    }
+  ]
+}
